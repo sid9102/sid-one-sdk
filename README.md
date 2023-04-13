@@ -5,3 +5,7 @@ To run all tests, add a file called `API_KEY` to the root of the project with yo
 require it will be skipped. 
 
 Simply run `pytest` to run the tests.
+
+TODO: 
+- query params
+- error handling
