@@ -92,6 +92,20 @@ def test_the_one_api_get_quotes_with_offset():
     assert len(quotes_offset_1) > 0
     assert quotes_offset_0[0].id != quotes_offset_1[0].id
 
+@requires_api_key
+def test_the_one_api_get_quotes_with_sort():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movie_id = "5cd95395de30eff6ebccde5c"
+    quotes_sorted_asc = api.get_all(Quote, parent_model=Movie, parent_id=movie_id, sort="dialog", ascending=True)
+    quotes_sorted_desc = api.get_all(Quote, parent_model=Movie, parent_id=movie_id, sort="dialog", ascending=False)
+
+    assert len(quotes_sorted_asc) > 0
+    assert len(quotes_sorted_desc) > 0
+    assert quotes_sorted_asc[0].id != quotes_sorted_desc[0].id
+
 
 @requires_api_key
 def test_the_one_api_get_quote_instance():

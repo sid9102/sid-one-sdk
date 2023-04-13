@@ -26,7 +26,9 @@ class OneApiClient:
                 parent_id: str = None,
                 limit: Optional[int] = None,
                 page: Optional[int] = None,
-                offset: Optional[int] = None) -> List[BaseModel]:
+                offset: Optional[int] = None,
+                sort: Optional[str] = None,
+                ascending: bool = True) -> List[BaseModel]:
         endpoint = _get_endpoint(model, parent_model, parent_id)
         headers = {"Authorization": f"Bearer {self.api_key}"}
         params = {}
@@ -36,6 +38,9 @@ class OneApiClient:
             params["page"] = page
         if offset:
             params["offset"] = offset
+        if sort:
+            sort_order = "asc" if ascending else "desc"
+            params["sort"] = f"{sort}:{sort_order}"
 
         response = requests.get(f"{self.BASE_URL}{endpoint}", headers=headers, params=params)
 

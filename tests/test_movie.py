@@ -93,6 +93,7 @@ def test_the_one_api_get_movies_with_page():
     assert len(movies_page_2) > 0
     assert movies_page_1[0].id != movies_page_2[0].id
 
+
 @requires_api_key
 def test_the_one_api_get_movies_with_offset():
     with open("API_KEY", "r") as api_key_file:
@@ -105,6 +106,20 @@ def test_the_one_api_get_movies_with_offset():
     assert len(movies_offset_0) > 0
     assert len(movies_offset_1) > 0
     assert movies_offset_0[0].id != movies_offset_1[0].id
+
+
+@requires_api_key
+def test_the_one_api_get_movies_with_sort():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movies_sorted_asc = api.get_all(Movie, sort="name", ascending=True)
+    movies_sorted_desc = api.get_all(Movie, sort="name", ascending=False)
+
+    assert len(movies_sorted_asc) > 0
+    assert len(movies_sorted_desc) > 0
+    assert movies_sorted_asc[0].id != movies_sorted_desc[0].id
 
 
 @requires_api_key
