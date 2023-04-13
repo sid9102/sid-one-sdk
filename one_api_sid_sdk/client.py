@@ -23,10 +23,21 @@ class OneApiClient:
     def get_all(self,
                 model: Type[BaseModel],
                 parent_model: Optional[Type[BaseModel]] = None,
-                parent_id: str = None) -> List[BaseModel]:
+                parent_id: str = None,
+                limit: Optional[int] = None,
+                page: Optional[int] = None,
+                offset: Optional[int] = None) -> List[BaseModel]:
         endpoint = _get_endpoint(model, parent_model, parent_id)
         headers = {"Authorization": f"Bearer {self.api_key}"}
-        response = requests.get(f"{self.BASE_URL}{endpoint}", headers=headers)
+        params = {}
+        if limit:
+            params["limit"] = limit
+        if page:
+            params["page"] = page
+        if offset:
+            params["offset"] = offset
+
+        response = requests.get(f"{self.BASE_URL}{endpoint}", headers=headers, params=params)
 
         if response.status_code == 200:
             response_data = response.json()

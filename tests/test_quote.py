@@ -52,6 +52,48 @@ def test_the_one_api_get_all_quotes():
 
 
 @requires_api_key
+def test_the_one_api_get_quotes_with_limit():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movie_id = "5cd95395de30eff6ebccde5c"
+    quotes = api.get_all(Quote, parent_model=Movie, parent_id=movie_id, limit=3)
+
+    assert len(quotes) == 3
+    assert isinstance(quotes[0], Quote)
+
+
+def test_the_one_api_get_quotes_with_page():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movie_id = "5cd95395de30eff6ebccde5c"
+    quotes_page_1 = api.get_all(Quote, parent_model=Movie, parent_id=movie_id, page=1, limit=1)
+    quotes_page_2 = api.get_all(Quote, parent_model=Movie, parent_id=movie_id, page=2, limit=1)
+
+    assert len(quotes_page_1) > 0
+    assert len(quotes_page_2) > 0
+    assert quotes_page_1[0].id != quotes_page_2[0].id
+
+
+@requires_api_key
+def test_the_one_api_get_quotes_with_offset():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movie_id = "5cd95395de30eff6ebccde5c"
+    quotes_offset_0 = api.get_all(Quote, parent_model=Movie, parent_id=movie_id, offset=0)
+    quotes_offset_1 = api.get_all(Quote, parent_model=Movie, parent_id=movie_id, offset=1)
+
+    assert len(quotes_offset_0) > 0
+    assert len(quotes_offset_1) > 0
+    assert quotes_offset_0[0].id != quotes_offset_1[0].id
+
+
+@requires_api_key
 def test_the_one_api_get_quote_instance():
     with open("API_KEY", "r") as api_key_file:
         api_key = api_key_file.read().strip()

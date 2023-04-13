@@ -69,6 +69,45 @@ def test_the_one_api_get_all_movies():
 
 
 @requires_api_key
+def test_the_one_api_get_movies_with_limit():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movies = api.get_all(Movie, limit=3)
+
+    assert len(movies) == 3
+    assert isinstance(movies[0], Movie)
+
+
+@requires_api_key
+def test_the_one_api_get_movies_with_page():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movies_page_1 = api.get_all(Movie, page=1, limit=1)
+    movies_page_2 = api.get_all(Movie, page=2, limit=1)
+
+    assert len(movies_page_1) > 0
+    assert len(movies_page_2) > 0
+    assert movies_page_1[0].id != movies_page_2[0].id
+
+@requires_api_key
+def test_the_one_api_get_movies_with_offset():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movies_offset_0 = api.get_all(Movie, offset=0)
+    movies_offset_1 = api.get_all(Movie, offset=1)
+
+    assert len(movies_offset_0) > 0
+    assert len(movies_offset_1) > 0
+    assert movies_offset_0[0].id != movies_offset_1[0].id
+
+
+@requires_api_key
 def test_the_one_api_get_movie_instance():
     with open("API_KEY", "r") as api_key_file:
         api_key = api_key_file.read().strip()

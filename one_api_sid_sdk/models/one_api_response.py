@@ -10,6 +10,9 @@ class OneApiResponse(Generic[T]):
         self.docs = [data_cls.from_data(data) for data in response_data["docs"]]
         self.total = response_data["total"]
         self.limit = response_data["limit"]
-        self.offset = response_data["offset"]
-        self.page = response_data["page"]
-        self.pages = response_data["pages"]
+        if "offset" in response_data:
+            self.offset = response_data["offset"]
+        if "page" in response_data:
+            self.page = response_data["page"]
+        if "pages" in response_data:
+            self.pages = response_data["pages"]

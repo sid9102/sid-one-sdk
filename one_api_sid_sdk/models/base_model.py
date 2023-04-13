@@ -7,6 +7,9 @@ T = TypeVar('T', bound='BaseModel')
 
 class BaseModel(ABC):
 
+    def __init__(self):
+        self.id = None
+
     @classmethod
     def from_data(cls: Type[T], data: Dict) -> T:
         return cls(data)
