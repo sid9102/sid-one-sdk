@@ -12,7 +12,13 @@ class OneApiResponse(Generic[T]):
         self.limit = response_data["limit"]
         if "offset" in response_data:
             self.offset = response_data["offset"]
+        else:
+            self.offset = 0
         if "page" in response_data:
             self.page = response_data["page"]
+        else:
+            self.page = 0
         if "pages" in response_data:
             self.pages = response_data["pages"]
+        else:
+            self.pages = 0
