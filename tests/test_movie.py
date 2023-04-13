@@ -1,5 +1,9 @@
+import os
+
 import pytest
 from one_api_sid_sdk.models import Movie
+from one_api_sid_sdk.client import OneApiClient
+from .utils import requires_api_key
 
 
 def test_movie_from_data():
@@ -50,3 +54,15 @@ def test_movie_from_json():
     assert movie.academy_award_nominations == 13
     assert movie.academy_award_wins == 4
     assert movie.rotten_tomatoes_score == 91
+
+
+@requires_api_key
+def test_the_one_api_get_all_movies():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movies = api.get_all(Movie)
+
+    assert len(movies) > 0
+    assert isinstance(movies[0], Movie)
