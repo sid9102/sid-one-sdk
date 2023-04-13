@@ -3,6 +3,7 @@ from .base_model import BaseModel
 
 class Movie(BaseModel):
     def __init__(self, movie_data: dict):
+        super().__init__()
         self.id = movie_data["_id"]
         self.name = movie_data["name"]
         self.runtime_in_minutes = movie_data["runtimeInMinutes"]
