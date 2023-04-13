@@ -1,5 +1,3 @@
-import os
-
 import pytest
 from one_api_sid_sdk.models import Quote, Movie
 from one_api_sid_sdk.client import OneApiClient
@@ -51,3 +49,29 @@ def test_the_one_api_get_all_quotes():
 
     assert len(quotes) > 0
     assert isinstance(quotes[0], Quote)
+
+
+@requires_api_key
+def test_the_one_api_get_quote_instance():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    quote_id = "5cd96e05de30eff6ebcced61"
+    quote = api.get_instance(Quote, quote_id)
+
+    assert quote is not None
+    assert isinstance(quote, Quote)
+    assert quote.id == quote_id
+
+
+@requires_api_key
+def test_the_one_api_get_quote_instance_not_found():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    quote_id = "non_existent_quote_id"
+    quote = api.get_instance(Quote, quote_id)
+
+    assert quote is None

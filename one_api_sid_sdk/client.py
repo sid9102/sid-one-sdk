@@ -34,3 +34,19 @@ class OneApiClient:
             return one_api_response.docs
         else:
             response.raise_for_status()
+
+    def get_instance(self,
+                     model: Type[BaseModel],
+                     instance_id: str) -> Optional[BaseModel]:
+        endpoint = _get_endpoint(model)
+        headers = {"Authorization": f"Bearer {self.api_key}"}
+        response = requests.get(f"{self.BASE_URL}{endpoint}/{instance_id}", headers=headers)
+
+        if response.status_code == 200:
+            response_data = response.json()
+            one_api_response = OneApiResponse(response_data, model)
+            return one_api_response.docs[0] if one_api_response.docs else None
+        elif response.status_code == 500:
+            return None
+        else:
+            response.raise_for_status()

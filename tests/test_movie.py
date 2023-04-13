@@ -66,3 +66,29 @@ def test_the_one_api_get_all_movies():
 
     assert len(movies) > 0
     assert isinstance(movies[0], Movie)
+
+
+@requires_api_key
+def test_the_one_api_get_movie_instance():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movie_id = "5cd95395de30eff6ebccde5c"
+    movie = api.get_instance(Movie, movie_id)
+
+    assert movie is not None
+    assert isinstance(movie, Movie)
+    assert movie.id == movie_id
+
+
+@requires_api_key
+def test_the_one_api_get_movie_instance_not_found():
+    with open("API_KEY", "r") as api_key_file:
+        api_key = api_key_file.read().strip()
+
+    api = OneApiClient(api_key=api_key)
+    movie_id = "non_existent_movie_id"
+    movie = api.get_instance(Movie, movie_id)
+
+    assert movie is None
