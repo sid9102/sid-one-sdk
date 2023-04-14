@@ -3,6 +3,7 @@ from typing import Union, List
 
 
 class FilterOperation(Enum):
+    """Enumeration of possible filter operations."""
     MATCH = "="
     NOT_MATCH = "!="
     INCLUDE = "="
@@ -18,11 +19,23 @@ class FilterOperation(Enum):
 
 class Filter:
     def __init__(self, field: str, operation: FilterOperation, value: Union[str, List[str]]):
+        """
+        Initialize a Filter object with the given field, operation, and value.
+
+        :param field: The field to apply the filter on.
+        :param operation: The filter operation to apply.
+        :param value: The value(s) to filter with.
+        """
         self.field = field
         self.operation = operation
         self.value = value
 
     def to_suffix(self) -> str:
+        """
+        Convert the Filter object to a URL suffix.
+
+        :return: URL suffix as a string.
+        """
         if self.operation in [FilterOperation.EXISTS, FilterOperation.NOT_EXISTS]:
             return f"{self.field}" if self.operation == FilterOperation.EXISTS else f"!{self.field}"
         elif self.operation == FilterOperation.REGEX:
