@@ -146,7 +146,6 @@ def test_the_one_api_get_movie_instance_not_found():
     assert movie is None
 
 
-
 @requires_api_key
 def test_the_one_api_get_movies_with_matching_filter():
     with open("API_KEY", "r") as api_key_file:
@@ -198,6 +197,7 @@ def test_the_one_api_get_movies_with_regex_filter():
 
     assert len(movies) > 0
     assert all("Fellowship" in movie.name for movie in movies)
+
 
 @requires_api_key
 def test_the_one_api_get_movies_with_lt_gte_filter():
