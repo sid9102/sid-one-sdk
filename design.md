@@ -31,6 +31,10 @@ Due to limitations in the API and time constraints, the SDK has some caveats:
 
 - Inadequate error handling: The API returns a 500 status code instead of a 404 when an entity is not found. More detailed error handling and validation would be added in a production SDK.
 - Limited user-facing errors: More informative error messages would be provided to users in a production SDK.
+- Not uploaded to PyPi: given that this SDK is incomplete and useless, 
+I didn't want to waste the Python Foundation's resources on it. I have been a big fan of GitHub Packages for this kind 
+of thing but it doesn't explicitly support pip packages. Using the repo itself is the next best thing.
+Git tags stand in for release versions with this approach.
 
 ## Extensibility and Future Work
 
@@ -39,5 +43,3 @@ The current SDK design allows for easy extension to support additional API endpo
 - Adding more models for other API endpoints.
 - Implementing a resource-based interface for more flexible querying.
 - Adding caching mechanisms to improve performance.
-
-Overall, the SDK is designed with a focus on clean code, ease of use, and extensibility to support a wide range of use cases and requirements.

@@ -6,8 +6,11 @@ A Python SDK for The One API, which provides access to information about The Lor
 
 To install the SDK, run:
 ```
-pip install one-api-sdk
+pip install 'one-api-sid-sdk @ git+https://github.com/sid9102/sid-one-sdk@0.1.0'
+
 ```
+This is installed directly from the 0.1.0 tag on the GitHub repository, allowing us 
+to avoid dumping a useless SDK on PyPI!
 
 ## Usage
 
