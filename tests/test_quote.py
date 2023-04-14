@@ -1,6 +1,5 @@
-import pytest
-from one_api_sid_sdk.models import Quote, Movie
 from one_api_sid_sdk.client import OneApiClient
+from one_api_sid_sdk.models import Quote, Movie
 from .utils import requires_api_key
 
 

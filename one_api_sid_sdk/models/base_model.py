@@ -1,5 +1,5 @@
-from abc import ABC
 import json
+from abc import ABC
 from typing import TypeVar, Dict, Type
 
 T = TypeVar('T', bound='BaseModel')

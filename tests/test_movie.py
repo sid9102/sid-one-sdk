@@ -1,8 +1,6 @@
-import os
-import pytest
+from one_api_sid_sdk.client import OneApiClient
 from one_api_sid_sdk.filter import Filter, FilterOperation
 from one_api_sid_sdk.models import Movie
-from one_api_sid_sdk.client import OneApiClient
 from .utils import requires_api_key
 
 

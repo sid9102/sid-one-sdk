@@ -1,4 +1,5 @@
 from typing import Type, List, Optional
+
 import requests
 
 from .filter import Filter

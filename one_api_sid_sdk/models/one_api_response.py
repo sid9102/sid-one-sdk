@@ -1,4 +1,4 @@
-from typing import List, TypeVar, Generic, Type
+from typing import TypeVar, Generic, Type
 
 from .base_model import BaseModel
 
