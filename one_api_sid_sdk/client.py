@@ -1,5 +1,7 @@
 from typing import Type, List, Optional
 import requests
+
+from .filter import Filter
 from .models.base_model import BaseModel
 from .models.one_api_response import OneApiResponse
 
@@ -28,7 +30,8 @@ class OneApiClient:
                 page: Optional[int] = None,
                 offset: Optional[int] = None,
                 sort: Optional[str] = None,
-                ascending: bool = True) -> List[BaseModel]:
+                ascending: bool = True,
+                filters: Optional[List[Filter]] = None) -> List[BaseModel]:
         endpoint = _get_endpoint(model, parent_model, parent_id)
         headers = {"Authorization": f"Bearer {self.api_key}"}
         params = {}
@@ -42,7 +45,16 @@ class OneApiClient:
             sort_order = "asc" if ascending else "desc"
             params["sort"] = f"{sort}:{sort_order}"
 
-        response = requests.get(f"{self.BASE_URL}{endpoint}", headers=headers, params=params)
+        url = f"{self.BASE_URL}{endpoint}"
+        if params:
+            url += "?" + "&".join([f"{k}={v}" for k, v in params.items()])
+        if filters:
+            if len(params) == 0:
+                url += "?"
+            for f in filters:
+                url += f"&{f.to_suffix()}"
+
+        response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
             response_data = response.json()
